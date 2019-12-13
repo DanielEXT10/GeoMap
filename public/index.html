@@ -23,11 +23,15 @@
     <h1>Data Selfie App</h1>
     <p>Latitude: <span id="latitude"> </span>&deg;<br></p>
     <p>Longitude: <span id="longitude"> </span>&deg;<br></p>
+    <button id="boton" onclick="showLocation()">Get my location</button>
     <div id="mymap">
 
     </div>
 
     <script>
+        var boton = document.querySelector("#boton")
+        
+        function showLocation(){
         if ('geolocation' in navigator) {
             console.log('geolocation available');
             navigator.geolocation.getCurrentPosition(async position => {
@@ -47,6 +51,7 @@
                 tiles.addTo(mymap);
 
                 const data = { lat, lon };
+               
                 const options = {
                     method: 'POST',
                     body: JSON.stringify(data),
@@ -64,7 +69,7 @@
             consoloe.log('geolocation not available');
         }
 
-
+    }
     </script>
 
 </body>
