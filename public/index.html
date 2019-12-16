@@ -17,39 +17,31 @@
 </style>
 
 <body>
-    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
-        integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
-        crossorigin=""></script>
+    
     <h1>Data Selfie App</h1>
     <p>Latitude: <span id="latitude"> </span>&deg;<br></p>
     <p>Longitude: <span id="longitude"> </span>&deg;<br></p>
-    <button id="boton" onclick="showLocation()">Get my location</button>
-    <div id="mymap">
-
-    </div>
-
+    <button id="boton" onclick="sendData()">Get my location</button>
+    
     <script>
         var boton = document.querySelector("#boton")
         
-        function showLocation(){
+   function sendData(){
         if ('geolocation' in navigator) {
             console.log('geolocation available');
             navigator.geolocation.getCurrentPosition(async position => {
 
                 const lat = position.coords.latitude;
                 const lon = position.coords.longitude;
-                const mymap = L.map('mymap').setView([lat, lon], 13);
+                
                 document.getElementById('latitude').textContent = lat;
                 document.getElementById('longitude').textContent = lon;
                 console.log(position);
                 //console.log(position.coords.longitude);
 
-                const attribution =
-                    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
-                const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-                const tiles = L.tileLayer(tileUrl, { attribution });
-                tiles.addTo(mymap);
+              
 
+                
                 const data = { lat, lon };
                
                 const options = {
@@ -62,14 +54,16 @@
                 const res = await fetch('/api', options);
                 const json = await res.json();
                 console.log(json);
+            
 
             });
         }
+        
         else {
             consoloe.log('geolocation not available');
         }
-
     }
+    
     </script>
 
 </body>
